@@ -1,12 +1,11 @@
 import { DataTypes, Model } from "sequelize";
 import { ModelAttributes } from "sequelize/types/model";
 
-// Valid
 export class TokenTransfer extends Model {
   declare txHash: string;
   declare from: string;
   declare to: string;
-  declare value: number;
+  declare value: string;
   declare blockNumber: number;
 
   static modelAttributes: ModelAttributes = {
