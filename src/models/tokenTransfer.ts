@@ -27,4 +27,16 @@ export class TokenTransfer extends Model {
       type: DataTypes.INTEGER,
     },
   };
+
+  static indexes = [
+    // Create an index to search by addresses (from and to)
+    {
+      name: "from_index",
+      fields: ["from"],
+    },
+    {
+      name: "to_index",
+      fields: ["to"],
+    },
+  ];
 }

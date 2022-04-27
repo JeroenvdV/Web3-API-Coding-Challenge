@@ -15,4 +15,12 @@ export class TokenHolder extends Model {
       type: DataTypes.STRING,
     },
   };
+
+  static indexes = [
+    // Create an index to search by balance (for ranking)
+    {
+      name: "balance_index",
+      fields: ["balance"],
+    },
+  ];
 }

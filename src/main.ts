@@ -7,14 +7,20 @@ import { TokenHolder } from "./models/tokenHolder";
 import { TransferController } from "./transferController";
 import * as config from "./config";
 
+/**
+ * Application logic. Connects to the API and database and handles events.
+ */
 class DogApp {
-  private ethSubscription: Subscription<Log> | undefined;
+  // Websocket subscription to new logs
   private readonly web3: Web3;
   private readonly sequelize: Sequelize;
+  private ethSubscription: Subscription<Log> | undefined;
 
   constructor() {
+    // Construct blockchain parsing library instance
     this.web3 = new Web3(config.wsUrl);
 
+    // Connect to database
     this.sequelize = new Sequelize(
       config.dbDatabase,
       config.dbUser,
@@ -25,16 +31,25 @@ class DogApp {
       }
     );
 
+    // Init models
     TokenTransfer.init(TokenTransfer.modelAttributes, {
       sequelize: this.sequelize,
+      indexes: TokenTransfer.indexes,
     });
     TokenHolder.init(TokenHolder.modelAttributes, {
       sequelize: this.sequelize,
+      indexes: TokenHolder.indexes,
     });
 
+    // Start listening for data
     void this.initialize();
   }
 
+  /**
+   * Ensures the database is ready for data and starts listening to data from the API.
+   *
+   * Also ensures the application closes properly.
+   */
   async initialize() {
     try {
       // Listen to all node events that signify closing the app and shut down
@@ -46,7 +61,7 @@ class DogApp {
     }
 
     try {
-      // This will create the tables if needed
+      // This will create the database tables if needed
       await TokenTransfer.sync();
       await TokenHolder.sync();
     } catch (e) {
@@ -59,7 +74,7 @@ class DogApp {
 
     try {
       // Listen to new data on the blockchain
-      // TODO start from last block number
+      // TODO start from last known block number to rebuild the database.
       this.ethSubscription = this.web3.eth
         .subscribe("logs", {
           fromBlock: config.startBlock,
@@ -97,6 +112,9 @@ class DogApp {
     }
   }
 
+  /**
+   * Close connections when shutting down
+   */
   async cleanUp() {
     try {
       // Unsubscribe from the API
