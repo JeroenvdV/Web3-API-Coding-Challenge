@@ -22,3 +22,20 @@ export const exitSignals: string[] = [
   `uncaughtException`,
   `SIGTERM`,
 ];
+
+export const transferFunctionInputs = [
+  {
+    type: "address",
+    name: "from",
+    indexed: true,
+  },
+  {
+    type: "address",
+    name: "to",
+    indexed: true,
+  },
+  {
+    type: "uint256",
+    name: "value",
+  },
+];
