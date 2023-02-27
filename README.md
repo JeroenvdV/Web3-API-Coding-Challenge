@@ -1,17 +1,6 @@
-How to run:
+Web3 Demo App
 
-- Set up MySQL or MariaDB somewhere. Create a new database (in my config named 'dogdemo') and put the connection details in config.ts.
-- Insert an Alchemy (or other) websockets link into config.ts.
-- Install dependencies
-  - `npm install`
-- Run the application, either:
-  - `npx ts-node src/main.ts`
-- or:
-  - `npx tsc && node lib/main.js`
-- Run tests:
-  - `npm run test`
-
-Description / notes:
+This demo app makes use of blockchain data via an API and extracts meaningful insights. The entire repository was made over the course of a few hours as a challenge. Thus, it has known and notable (quality) issues.
 
 This is an application that processes data from Ethereum about token transfers and indexes that information locally. It does so by continuously 
 listening for new data that the API sends that matches the given topic and address so that all the transfers corresponding to The Doge NFT (DOG) token 
@@ -36,3 +25,15 @@ If they are actually distinct data points, then the primary key should be change
 - Rebuilding the dataset from the first relevant block isn't working. The API most likely returns too much data at once. A batching process can be made to mitigate this. Instead, I only run it with some recent blocks.
 - In the interest of time some features were marked with TODO and not implemented.
 
+How to run:
+
+- Set up MySQL or MariaDB somewhere. Create a new database (in my config named 'dogdemo') and put the connection details in config.ts.
+- Insert an Alchemy (or other) websockets link into config.ts.
+- Install dependencies
+  - `npm install`
+- Run the application, either:
+  - `npx ts-node src/main.ts`
+- or:
+  - `npx tsc && node lib/main.js`
+- Run tests:
+  - `npm run test`

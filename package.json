@@ -1,7 +1,7 @@
 {
-  "name": "fractionalart-jeroen",
+  "name": "web3-jeroen",
   "version": "1.0.0",
-  "description": "Fractional.art Demo App",
+  "description": "Web3 Demo App",
   "main": "main.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha -r ts-node/register 'test/**/*.test.ts'"
